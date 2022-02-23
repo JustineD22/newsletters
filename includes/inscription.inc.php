@@ -51,7 +51,7 @@ if (isset($_POST['inscription'])) {
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $password = password_hash($password, PASSWORD_DEFAULT);
             
-            $requete = $conn->prepare("SELECT * FROM t_users WHERE usermail='$email'");
+            $requete = $conn->prepare("SELECT * FROM t_users WHERE USERMAIL='$email'");
             $requete->execute();
             $resultat = $requete->fetchAll(PDO::FETCH_OBJ);
            
@@ -60,19 +60,18 @@ if (isset($_POST['inscription'])) {
             }
 
             else {
-                $pseudo = html_entity_decode($pseudo);
                 $query = $conn->prepare("
-                INSERT INTO users(name, firstname, email, pseudo, password, bio, avatar)
-                VALUES (:usename, :usefirstname, :usermail, :usepassword)
+                INSERT INTO t_users(ID_ROLE,USENAME, USEFIRSTNAME, USERMAIL, USEPASSWORD)
+                VALUES (:id_role, :usename, :usefirstname, :usermail, :usepassword)
                 ");
 
+                $id = 2;
+                $query->bindParam(':id_role', $id);
                 $query->bindParam(':usename', $name, PDO::PARAM_STR_CHAR);
                 $query->bindParam(':usefirstname', $firstname, PDO::PARAM_STR_CHAR);
                 $query->bindParam(':usermail', $email, PDO::PARAM_STR_CHAR);
                 $query->bindParam(':usepassword', $password);
                 $query->execute();
-
-                move_uploaded_file($fileTmpName, $path . $fileName);
                 
                 echo "<p>Inscription effectuées</p>";
             }
