@@ -1,6 +1,6 @@
 <?php
 
-function getSubject() : array
+function getSubject() 
 {
         $serverName = "localhost";
         $userName = "root";
@@ -9,11 +9,12 @@ function getSubject() : array
         
         $conn = new PDO("mysql:host=$serverName;dbname=$database", $userName, $userPassword);
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
-        $requete = $conn->prepare("SELECT * FROM t_subjects");
+
+        $requete = $conn->prepare("SELECT SUBCONTENT FROM t_subjects ORDER BY SUBCONTENT ASC");
         $requete -> execute();
-        $resultat = $requete->fetch(PDO::FETCH_ASSOC);
-    
-        $array = array ($resultat);
-        return $array;
+        $resultat = $requete->fetchAll(PDO::FETCH_ASSOC); 
+
+        foreach ($resultat as $key => $value) {
+        }
+        return $resultat;
 }

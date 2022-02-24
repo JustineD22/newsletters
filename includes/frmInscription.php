@@ -9,7 +9,7 @@
             <input type="text" id="firstname" name="firstname"  value="<?php echo $firstname;?>" />
         </li>
         <li>
-            <label for="email">* E-mail :</label>
+            <label for="email"> E-mail :</label>
             <input type="text" id="email" name="email"  value="<?php echo $email;?>" />
         </li>
         <li>
