@@ -4,6 +4,7 @@
 <br>
 
 <?php
+var_dump($_POST);
 
 $test = getSubject();
 //dump($test);
@@ -27,15 +28,14 @@ $html .= "</form>";
 
 echo($html);
 
-// if (isset($_POST['frm'])) {
-//     $abo = $_POST['abo'] ?? '';
-//     $erreur = array();
+if (isset($_POST['valider'])) {
+    $abo = $_POST['abo'] ?? '';
+    $erreur = array();
 
-//     if (strlen($abo) === 0)
-//     array_push($erreur, "Veuillez cocher un sujet");
-//     echo ("Saisir un sujet");
+    if (strlen($abo) === 0)
+    array_push($erreur, "Veuillez cocher un sujet");
 
-//     if (count($erreur) === 0) { 
-//         echo("envoi reussi");
-//     }
-// }
+    if (count($erreur) === 0) { 
+        echo("envoi reussi");
+    }
+}
