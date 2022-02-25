@@ -54,9 +54,13 @@ if (isset($_POST['inscription'])) {
             $requete = $conn->prepare("SELECT * FROM t_users WHERE USERMAIL='$email'");
             $requete->execute();
             $resultat = $requete->fetchAll(PDO::FETCH_OBJ);
-           
+            
             if(count($resultat) !== 0) {
-                echo "<p>Votre adresse est déjà enregistrée dans la base de données</p>";
+                $queryupdate = $conn->prepare(" UPDATE t_users 
+                SET ID_ROLE = 2, USENAME = '$name', USEFIRSTNAME = '$firstname', USEPASSWORD = '$password'
+                WHERE USERMAIL = '$email' ");
+                $queryupdate->execute();
+
             }
 
             else {
