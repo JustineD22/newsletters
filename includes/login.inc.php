@@ -22,7 +22,7 @@ if (isset($_POST['envoi'])) {
             $conn = new PDO("mysql:host=$serverName;dbname=$database", $userName, $userPassword);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $requete = $conn->prepare("SELECT * FROM t_users WHERE usermail='$mail'");
+            $requete = $conn->prepare("SELECT * FROM t_users WHERE USERMAIL='$mail'");
             $requete->execute();
             $resultat = $requete->fetchAll(PDO::FETCH_OBJ);
            
@@ -35,9 +35,10 @@ if (isset($_POST['envoi'])) {
                 if(password_verify($mdp, $mdpRequete)) {
                     if(!isset($_SESSION['login'])) {
                         $_SESSION['login'] = true;
+                        $_SESSION['id'] = $resultat[0]->ID_USER;
+                        $_SESSION['role'] = $resultat[0]->ID_ROLE;
                         $_SESSION['nom'] = $resultat[0]->USENAME;
                         $_SESSION['prenom'] = $resultat[0]->USEFIRSTNAME;
-                        $_SESSION['role'] = $resultat[0]->ID_ROLE;
                         echo "<script>
                         document.location.replace('http://localhost/newsletters/');
                         </script>";
@@ -72,7 +73,7 @@ if (isset($_POST['envoi'])) {
         echo $messageErreur;
     }
 } else {
-    echo "<h2>Merci de renseigner le formulaire&nbsp;:</h2>";
+    echo "<h2>Merci de renseigner le formulaire&nbsp; :</h2>";
     $mail = $mdp = '';
 }
 
